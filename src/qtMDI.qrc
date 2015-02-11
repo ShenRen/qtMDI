@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/new/CNCicons">
+        <file>icons/exit.png</file>
+        <file>icons/fileopen.png</file>
+        <file>icons/filesaveas.png</file>
+        <file>icons/machine_toggle.png</file>
+        <file>icons/pause_program.png</file>
+        <file>icons/reload.png</file>
+        <file>icons/skip_program.png</file>
+        <file>icons/stop_program.png</file>
+        <file>icons/estop.png</file>
+        <file>icons/run_program.png</file>
+        <file>icons/kfm_home.png</file>
+        <file>icons/help_about.png</file>
+        <file>icons/Qt.png</file>
+        <file>icons/edit.png</file>
+        <file>icons/properties.png</file>
+        <file>icons/optional.png</file>
+    </qresource>
+</RCC>
