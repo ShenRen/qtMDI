@@ -78,7 +78,7 @@ QStrncpy(prefix, compname, compname.length());
         qDebug() << "EMC contacted OK";   
         
         
-    // This single call inserts the component nmltest into the running system
+    // This single call inserts the component into the running system
     comp_id = hal_init(prefix);
 
     if(comp_id < 0)
@@ -145,7 +145,7 @@ int x;
 
     for(x = 0; x < num; x++)
         {
-        str[x] = (char)qstr.at(x).unicode();
+        str[x] = (char)qstr.at(x).toLatin1();
         }
     str[x] = 0;
 

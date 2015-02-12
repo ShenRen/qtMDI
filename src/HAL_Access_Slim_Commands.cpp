@@ -523,7 +523,7 @@ char *writer_name=0, *bidir_name=0;
             {
             if(writers || bidirs) 
                 {
-dir_error:
+dir_error:  // I didn't write this - it is shit programming!
                 qDebug() << "Signal " << signal  << "cannot add pin " << pin->name << "it already has pin";
                 return -EINVAL;
                 }
