@@ -83,16 +83,21 @@ void qtMDI::onCloseDown()
 
 void qtMDI::setupPins()
 {
-QString pin = "inposition";
+QString pin1 = "inposition", pin2 = "msgdisable";
 QString motion_inpos = "motion.in-position";
-QString signame = "InPosSig";
+QString msg_disable = "axisui.msg-disable";
+QString signame1 = "InPosSig", signame2 = "MsgDisableSig";
 QStringList pinList; 
 
-    _hal->createBitPin(pin, true);
+    _hal->createBitPin(pin1, true);
+    _hal->createBitPin(pin2, true);
         
     // another way to create sig and link all in one
-    pinList << prefixName + "." + pin << motion_inpos;
-    _hal->netSignalPin(signame, pinList);  
+    pinList << prefixName + "." + pin1 << motion_inpos;
+    _hal->netSignalPin(signame1, pinList);  
+//    pinList.clear();
+//    usleep(2000);
+//    pinList << prefixName + "." + pin2 << msg_disable;
         
 }
 
@@ -154,14 +159,25 @@ void qtMDI::startTimer()
 {
     refreshTimer = new QTimer(this);
     connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
-    refreshTimer->start(100);
+    //refreshTimer->start(100);
 }
 
 
 void qtMDI::refresh()
 {
 QString str;
+int ret = 0;
 
+    // If last command produced an error, stop
+    if(bRun)
+        {
+        ret == checkErrors();
+        if(ret != 0)
+            {
+            bRun = false;
+            return;
+            }
+        }
     // running prog and last move completed
     if( bRun && (_hal->getBitPinValue(0) == 1 ) )    
         {
@@ -201,6 +217,31 @@ QString str;
  
           
 
+}
+
+
+int qtMDI::checkErrors()
+{
+QString str;
+
+    // read the EMC status
+    if (0 != _hal->_nml->updateStatus()) 
+        _hal->_nml->error_string = "Bad Status";
+
+    // read the EMC errors
+    if (0 != _hal->_nml->updateError())
+        _hal->_nml->error_string = "Bad Status";
+    
+    // print any result stored by updateError() in error_string
+    if (_hal->_nml->error_string.length()) 
+        {
+        stopProgram();
+        str.sprintf("Error at line %d - %s",listIndex, qPrintable(_hal->_nml->error_string) );
+        statusbar->showMessage(str);
+        _hal->_nml->error_string = "";
+        return -1;        
+        }
+    return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////

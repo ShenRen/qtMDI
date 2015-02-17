@@ -75,10 +75,6 @@ public:
     double receiveTimeout;
     double doneTimeout;
     
-
-    
-///////////////  Private NML functions   //////////////////////////////////////////////
-
     // programStartLine is the saved valued of the line that
     // sendProgramRun(int line) sent
     int programStartLine;
@@ -87,7 +83,11 @@ public:
 
     int emcTaskNmlGet();
     int emcErrorNmlGet();
+
     int updateStatus();
+    int updateError();
+    QString error_string;
+    
     int emcCommandWaitReceived(int );
     int emcCommandWaitDone(int );
     int iniLoad(const char*);

@@ -239,6 +239,61 @@ NMLTYPE type;
     return 0;
 }
 
+int NML_Access_Slim::updateError()
+{
+  NMLTYPE type;
+
+  if (0 == emcErrorBuffer ||
+      ! emcErrorBuffer->valid())
+    {
+      return -1;
+    }
+
+  switch (type = emcErrorBuffer->read())
+    {
+    case -1:
+      // error reading channel
+      return -1;
+      break;
+
+    case 0:
+      // nothing new
+      error_string = "";
+      break;
+
+    case EMC_OPERATOR_ERROR_TYPE:
+      error_string.sprintf("%s", ((EMC_OPERATOR_ERROR *) (emcErrorBuffer->get_address()))->error);
+      break;
+
+    case EMC_OPERATOR_TEXT_TYPE:
+      error_string.sprintf("%s",((EMC_OPERATOR_TEXT *) (emcErrorBuffer->get_address()))->text);
+      break;
+
+    case EMC_OPERATOR_DISPLAY_TYPE:
+      error_string.sprintf("%s",((EMC_OPERATOR_DISPLAY *) (emcErrorBuffer->get_address()))->display);
+      break;
+
+    case NML_ERROR_TYPE:
+      error_string.sprintf("%s", ((NML_ERROR *) (emcErrorBuffer->get_address()))->error);
+      break;
+
+    case NML_TEXT_TYPE:
+      error_string.sprintf("%s", ((NML_TEXT *) (emcErrorBuffer->get_address()))->text);
+      break;
+
+    case NML_DISPLAY_TYPE:
+      error_string.sprintf("%s", ((NML_DISPLAY *) (emcErrorBuffer->get_address()))->display);
+      break;
+
+    default:
+      error_string.sprintf("unrecognized error %ld",type);
+      return -1;
+      break;
+    }
+
+  return 0;
+}
+
 
 
 

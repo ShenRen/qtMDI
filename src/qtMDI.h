@@ -106,6 +106,7 @@ private:
 private:
     void makeConnections();
     void setupPins();
+    int checkErrors();
                
 private slots:
     virtual void onCloseDown();

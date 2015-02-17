@@ -1,0 +1,12 @@
+##
+
+net inpos motion.in-position => qtCNC.inposition
+net XPos qtCNC.XAbsPin <= halui.axis.0.pos-feedback
+net YPos qtCNC.YAbsPin <= halui.axis.1.pos-feedback
+net ZPos qtCNC.ZAbsPin <= halui.axis.2.pos-feedback
+
+net XPosRel qtCNC.XRelPin <= halui.axis.0.pos-relative
+net YPosRel qtCNC.YRelPin <= halui.axis.1.pos-relative
+net ZPosRel qtCNC.ZRelPin <= halui.axis.2.pos-relative
+
+

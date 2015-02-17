@@ -92,3 +92,30 @@ Pause and select the line above the new place to start with the mouse and use ri
 for a context menu and select 'Run from Here'
 
 (No account is taken of feed/speed/spindle settings in 'Run From' which remain as they were when paused.
+
+
+***********************************************************************************************
+
+Update:
+
+************************************************************************************************
+Error checking has been added to qtMDI.
+
+If an error is returned to the last MDI command, the program will halt with a message on the status bar
+giving line number and message
+
+There are problems running 2 GUIs, both polling status.
+Axis could easily poll before qtMDI, take the error message and display it, but not halt the program because it is unaware of it.
+
+Accordingly an 'axisui.msg-disable' pin has been built into Axis, which when set during the running of a program in qtMDI, will
+disable error status polling by Axis.
+
+Because qtMDI is hugely faster at initiating than Axis, the linkage of this pin has to occur in a post-gui hal file
+to give Axis time to create it
+
+Included in the repo is now the replacement python file for Axis and a sample config folder, showing the linkage required.
+
+Rename machinekit/bin/axis and insert new file, ensuring that it is executable (sudo chmod 755 axis)
+
+
+

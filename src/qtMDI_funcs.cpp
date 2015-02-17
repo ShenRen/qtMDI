@@ -82,8 +82,11 @@ void qtMDI::onRunFrom(int line /* = 1*/)
     // if not running or paused- ie normal start
     if(!bRun && !bPause)
         {
-        _hal->_nml->sendMdi(); 
+        _hal->setBitPinValue(1, true);
+        statusbar->showMessage("");
+        _hal->_nml->sendMdi();
         actionRunProgram->setChecked(bRun = true);
+        refreshTimer->start(100);
         }
        
     listIndex = line;  
@@ -113,7 +116,9 @@ void qtMDI::stepProgram()
 
 void qtMDI::stopProgram()
 {
+    _hal->setBitPinValue(1, false);
     bRun = false;
+    refreshTimer->stop();
     actionPauseProgram->setChecked(bPause = false);
     actionRunProgram->setChecked(bRun = false);
     _hal->_nml->sendAbort();
