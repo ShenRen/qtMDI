@@ -90,14 +90,11 @@ QString signame1 = "InPosSig", signame2 = "MsgDisableSig";
 QStringList pinList; 
 
     _hal->createBitPin(pin1, true);
-    _hal->createBitPin(pin2, true);
+    _hal->createBitPin(pin2, false);
         
     // another way to create sig and link all in one
     pinList << prefixName + "." + pin1 << motion_inpos;
     _hal->netSignalPin(signame1, pinList);  
-//    pinList.clear();
-//    usleep(2000);
-//    pinList << prefixName + "." + pin2 << msg_disable;
         
 }
 
