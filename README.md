@@ -2,6 +2,7 @@
 **************
 
 Qt5 based module for MachineKit, which will run linear programs using MDI commands only
+(FOR PRE-MULTICORE MACHINEKIT ONLY)
 
 Useful for the huge linear files produced by CAM, which will lock up Axis.
 
